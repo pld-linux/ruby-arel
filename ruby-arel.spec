@@ -1,11 +1,11 @@
 %define pkgname arel
 Summary:	Relational Algebra for Ruby
 Name:		ruby-%{pkgname}
-Version:	0.2.1
+Version:	2.0.5
 Release:	1
 License:	MIT/Ruby License
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	c612cc48a9367c9c196fcebed704d042
+# Source0-md5:	8393f0a249a2d75344954901391f522c
 Group:		Development/Languages
 URL:		http://github.com/brynary/arel
 BuildRequires:	rpmbuild(macros) >= 1.484
@@ -68,7 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc History.txt README.markdown doc/*
+%doc History.txt README.markdown
 %{ruby_rubylibdir}/%{pkgname}.rb
 %{ruby_rubylibdir}/%{pkgname}
 
