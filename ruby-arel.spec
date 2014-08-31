@@ -1,16 +1,20 @@
 %define pkgname arel
 Summary:	Relational Algebra for Ruby
 Name:		ruby-%{pkgname}
-Version:	2.0.5
+Version:	3.0.3
 Release:	1
 License:	MIT/Ruby License
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	8393f0a249a2d75344954901391f522c
+# Source0-md5:	c4b1aaea8c39cc58613bebcb6d56af4c
 Group:		Development/Languages
 URL:		http://github.com/brynary/arel
 BuildRequires:	rpmbuild(macros) >= 1.484
 BuildRequires:	ruby >= 1:1.8.6
 BuildRequires:	ruby-modules
+Requires:	ruby-hoe >= 3.7
+Requires:	ruby-minitest >= 4.7
+Conflicts:	ruby-hoe >= 4.0
+Conflicts:	ruby-minitest >= 5.0
 %{?ruby_mod_ver_requires_eq}
 #BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -19,7 +23,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_enable_debug_packages	0
 
 %description
-Arel is a Relational Algebra for Ruby. It 1) simplifies the generation complex of SQL queries and it 2) adapts to various RDBMS systems. It is intended to be a framework framework; that is, you can build your own ORM with it, focusing on innovative object and collection modeling as opposed to database compatibility and query generation.
+Arel is a Relational Algebra for Ruby. It 1) simplifies the generation
+complex of SQL queries and it 2) adapts to various RDBMS systems.
+It is intended to be a framework framework; that is, you can build
+your own ORM with it, focusing on innovative object and collection
+modeling as opposed to database compatibility and query generation.
 
 %package rdoc
 Summary:	HTML documentation for %{pkgname}
@@ -46,11 +54,12 @@ ri documentation for %{pkgname}.
 Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
-%setup -q -c
-%{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
-find -newer README.markdown -o -print | xargs touch --reference %{SOURCE0}
+%setup -q -n %{pkgname}-%{version}
 
 %build
+# write .gemspec
+%__gem_helper spec
+
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
 rm ri/created.rid
@@ -63,6 +72,10 @@ cp -a lib/* $RPM_BUILD_ROOT%{ruby_rubylibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
+# install gemspec
+install -d $RPM_BUILD_ROOT%{ruby_specdir}
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -71,6 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc History.txt README.markdown
 %{ruby_rubylibdir}/%{pkgname}.rb
 %{ruby_rubylibdir}/%{pkgname}
+%{ruby_specdir}/%{pkgname}-%{version}.gemspec
 
 %files rdoc
 %defattr(644,root,root,755)
