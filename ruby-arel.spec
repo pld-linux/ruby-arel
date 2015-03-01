@@ -2,7 +2,7 @@
 Summary:	Relational Algebra for Ruby
 Name:		ruby-%{pkgname}
 Version:	3.0.3
-Release:	1
+Release:	2
 License:	MIT/Ruby License
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 # Source0-md5:	c4b1aaea8c39cc58613bebcb6d56af4c
