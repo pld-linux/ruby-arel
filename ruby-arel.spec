@@ -2,32 +2,27 @@
 Summary:	Relational Algebra for Ruby
 Name:		ruby-%{pkgname}
 Version:	3.0.3
-Release:	2
+Release:	3
 License:	MIT/Ruby License
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 # Source0-md5:	c4b1aaea8c39cc58613bebcb6d56af4c
 Group:		Development/Languages
 URL:		http://github.com/brynary/arel
-BuildRequires:	rpmbuild(macros) >= 1.484
-BuildRequires:	ruby >= 1:1.8.6
-BuildRequires:	ruby-modules
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.665
 Requires:	ruby-hoe >= 3.7
 Requires:	ruby-minitest >= 4.7
 Conflicts:	ruby-hoe >= 4.0
 Conflicts:	ruby-minitest >= 5.0
-%{?ruby_mod_ver_requires_eq}
-#BuildArch:	noarch
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# nothing to be placed there. we're not noarch only because of ruby packaging
-%define		_enable_debug_packages	0
 
 %description
 Arel is a Relational Algebra for Ruby. It 1) simplifies the generation
-complex of SQL queries and it 2) adapts to various RDBMS systems.
-It is intended to be a framework framework; that is, you can build
-your own ORM with it, focusing on innovative object and collection
-modeling as opposed to database compatibility and query generation.
+complex of SQL queries and it 2) adapts to various RDBMS systems. It
+is intended to be a framework framework; that is, you can build your
+own ORM with it, focusing on innovative object and collection modeling
+as opposed to database compatibility and query generation.
 
 %package rdoc
 Summary:	HTML documentation for %{pkgname}
@@ -63,12 +58,13 @@ Dokumentacji w formacie ri dla %{pkgname}.
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
 rm ri/created.rid
+rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_ridir},%{ruby_rdocdir}}
 
-cp -a lib/* $RPM_BUILD_ROOT%{ruby_rubylibdir}
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
@@ -82,8 +78,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc History.txt README.markdown
-%{ruby_rubylibdir}/%{pkgname}.rb
-%{ruby_rubylibdir}/%{pkgname}
+%{ruby_vendorlibdir}/%{pkgname}.rb
+%{ruby_vendorlibdir}/%{pkgname}
 %{ruby_specdir}/%{pkgname}-%{version}.gemspec
 
 %files rdoc
