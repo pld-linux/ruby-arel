@@ -1,19 +1,15 @@
 %define pkgname arel
 Summary:	Relational Algebra for Ruby
 Name:		ruby-%{pkgname}
-Version:	3.0.3
-Release:	3
-License:	MIT/Ruby License
-Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	c4b1aaea8c39cc58613bebcb6d56af4c
+Version:	9.0.0
+Release:	1
+License:	MIT
+Source0:	https://rubygems.org/downloads/%{pkgname}-%{version}.gem
+# Source0-md5:	d643c246bdd2b15457b7095d7a84fd2d
 Group:		Development/Languages
-URL:		http://github.com/brynary/arel
+URL:		https://github.com/rails/arel
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
-Requires:	ruby-hoe >= 3.7
-Requires:	ruby-minitest >= 4.7
-Conflicts:	ruby-hoe >= 4.0
-Conflicts:	ruby-minitest >= 5.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -77,7 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc History.txt README.markdown
+%doc History.txt README.md MIT-LICENSE.txt
 %{ruby_vendorlibdir}/%{pkgname}.rb
 %{ruby_vendorlibdir}/%{pkgname}
 %{ruby_specdir}/%{pkgname}-%{version}.gemspec
